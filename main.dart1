@@ -1,0 +1,220 @@
+import 'dart:io';
+import 'dart:math';
+
+void main() {
+  final quiz = Quiz();
+  quiz.startQuiz();
+}
+
+class Quiz {
+  final List<Question> questions = [
+    Question(
+      questionText: "What is the capital of France?",
+      options: ["paris", "berlin", "london"],
+      correctAnswer: "paris",
+    ),
+    Question(
+      questionText: "Who wrote 'Romeo and Juliet'?",
+      options: ["shakespeare", "hemingway", "tolstoy"],
+      correctAnswer: "shakespeare",
+    ),
+    Question(
+      questionText: "What is the largest mammal?",
+      options: ["elephant", "whale", "giraffe"],
+      correctAnswer: "whale",
+    ),
+    Question(
+      questionText: "What is the chemical symbol for gold?",
+      options: ["go", "au", "ag"],
+      correctAnswer: "au",
+    ),
+    Question(
+      questionText: "Which planet is known as the Red Planet?",
+      options: ["venus", "mars", "jupiter"],
+      correctAnswer: "mars",
+    ),
+    Question(
+      questionText: "What is the largest planet in our solar system?",
+      options: ["earth", "saturn", "jupiter"],
+      correctAnswer: "jupiter",
+    ),
+    Question(
+      questionText: "Which gas do plants absorb from the atmosphere?",
+      options: ["oxygen", "carbon dioxide", "nitrogen"],
+      correctAnswer: "carbon dioxide",
+    ),
+    Question(
+      questionText: "Who painted the Mona Lisa?",
+      options: ["vincent van gogh", "leonardo da vinci", "pablo picasso"],
+      correctAnswer: "leonardo da vinci",
+    ),
+    Question(
+      questionText: "What is the tallest mountain in the world?",
+      options: ["mount kilimanjaro", "mount everest", "mount mcKinley"],
+      correctAnswer: "mount everest",
+    ),
+    Question(
+      questionText: "What is the largest ocean on Earth?",
+      options: ["atlantic ocean", "indian ocean", "pacific ocean"],
+      correctAnswer: "pacific ocean",
+    ),
+    Question(
+      questionText: "Which gas makes up the majority of Earth's atmosphere?",
+      options: ["oxygen", "nitrogen", "carbon dioxide"],
+      correctAnswer: "nitrogen",
+    ),
+    Question(
+      questionText: "What is the largest organ in the human body?",
+      options: ["heart", "liver", "skin"],
+      correctAnswer: "skin",
+    ),
+    Question(
+      questionText: "Which country is known as the Land of the Rising Sun?",
+      options: ["china", "south korea", "japan"],
+      correctAnswer: "japan",
+    ),
+    Question(
+      questionText: "What is the smallest prime number?",
+      options: ["0", "1", "2"],
+      correctAnswer: "2",
+    ),
+    Question(
+      questionText: "Which gas do plants release during photosynthesis?",
+      options: ["oxygen", "carbon dioxide", "hydrogen"],
+      correctAnswer: "oxygen",
+    ),
+    Question(
+      questionText: "What is the chemical symbol for water?",
+      options: ["h2o", "co2", "o2"],
+      correctAnswer: "h2o",
+    ),
+    Question(
+      questionText: "Which continent is known as the Land Down Under?",
+      options: ["africa", "south america", "australia"],
+      correctAnswer: "australia",
+    ),
+    Question(
+      questionText: "What is the largest desert in the world?",
+      options: ["sahara desert", "gobi desert", "antarctica"],
+      correctAnswer: "antarctica",
+    ),
+    Question(
+      questionText:
+          "Which planet is known as the Morning Star or Evening Star?",
+      options: ["mars", "venus", "mercury"],
+      correctAnswer: "venus",
+    ),
+    Question(
+      questionText: "In which year did Christopher Columbus discover America?",
+      options: ["1492", "1501", "1510"],
+      correctAnswer: "1492",
+    ),
+    Question(
+      questionText: "What is the largest planet in the Milky Way galaxy?",
+      options: ["mars", "saturn", "jupiter"],
+      correctAnswer: "jupiter",
+    ),
+    Question(
+      questionText:
+          "What is the primary function of the mitochondria in a cell?",
+      options: ["photosynthesis", "respiration", "digestion"],
+      correctAnswer: "respiration",
+    ),
+    Question(
+      questionText: "Who is the author of 'To Kill a Mockingbird'?",
+      options: ["j.k. rowling", "george orwell", "harper lee"],
+      correctAnswer: "harper lee",
+    ),
+    Question(
+      questionText: "What is the chemical symbol for sodium?",
+      options: ["s", "so", "na"],
+      correctAnswer: "na",
+    ),
+    Question(
+      questionText: "Which gas is responsible for the Earth's ozone layer?",
+      options: ["oxygen", "methane", "ozone"],
+      correctAnswer: "ozone",
+    ),
+    Question(
+      questionText: "What is the largest moon of Saturn?",
+      options: ["titan", "europa", "ganymede"],
+      correctAnswer: "titan",
+    ),
+    Question(
+      questionText: "Which continent is the least populous?",
+      options: ["asia", "australia", "antarctica"],
+      correctAnswer: "antarctica",
+    ),
+    Question(
+      questionText: "Who is often called the 'Father of Modern Physics'?",
+      options: ["albert einstein", "isaac newton", "niels bohr"],
+      correctAnswer: "albert einstein",
+    ),
+    Question(
+      questionText: "What is the chemical formula for table salt?",
+      options: ["h2o", "co2", "nacl"],
+      correctAnswer: "nacl",
+    ),
+    Question(
+      questionText: "Which planet is known as the 'Blue Planet'?",
+      options: ["mars", "earth", "uranus"],
+      correctAnswer: "earth",
+    )
+  ];
+  void startQuiz() {
+    print('Welcome to the Quiz!\n');
+
+    final int totalQuestions = 30;
+    final List<Question> randomQuestions = getRandomQuestions(totalQuestions);
+    int correctAnswers = 0;
+
+    for (final question in randomQuestions) {
+      print(question.questionText);
+      for (var i = 0; i < question.options.length; i++) {
+        print('${i + 1}. ${question.options[i]}');
+      }
+      final userAnswer = int.tryParse(stdin.readLineSync()!);
+
+      if (userAnswer != null &&
+          userAnswer >= 1 &&
+          userAnswer <= question.options.length &&
+          question.options[userAnswer - 1] == question.correctAnswer) {
+        correctAnswers++;
+        print('Correct!\n');
+      } else {
+        print('Incorrect. The correct answer is: ${question.correctAnswer}\n');
+      }
+    }
+
+    final double percentage = (correctAnswers / totalQuestions) * 100;
+
+    print('Quiz completed!\n');
+    print('Total correct answers: $correctAnswers');
+    print('Percentage: ${percentage.toStringAsFixed(2)}%');
+
+    if (percentage > 50) {
+      print('Congratulations! You passed the quiz.');
+    } else {
+      print('Sorry, you did not pass the quiz.');
+    }
+  }
+
+  List<Question> getRandomQuestions(int count) {
+    final random = Random();
+    final List<Question> shuffledQuestions = [...questions];
+    shuffledQuestions.shuffle(random);
+    return shuffledQuestions.sublist(0, count);
+  }
+}
+
+class Question {
+  final String questionText;
+  final List<String> options;
+  final String correctAnswer;
+
+  Question({
+    required this.questionText,
+    required this.options,
+    required this.correctAnswer,
+  });
+}
